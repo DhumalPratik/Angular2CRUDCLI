@@ -1,0 +1,54 @@
+<p>
+  Customer details!
+
+</p>
+<!--<div *ngIf="!customer">
+  <p>Fetching details...</p>
+</div>-->
+<form (ngSubmit)="onSubmit()" #customerForm="ngForm">
+  <div>
+    <div class="left half">
+      <div class="row">
+        <div>
+          <div class="salutation left">
+            <label>Salutation</label>
+            <input type="text" [(ngModel)]="customer.SalutationName" />
+          </div>
+          <div class="left w40">
+            <label>First Name</label>
+            <input type="text" [(ngModel)]="customer.FirstName" required />
+          </div>
+          <div class="right w40">
+            <label>Middle Name</label>
+            <input type="text" [(ngModel)]="customer.MiddleName" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label>Customer Type</label>
+        <input type="text" tabindex="2" disabled="disabled" [(ngModel)]="customer.CustomerType" />
+      </div>
+    </div>
+    <div class="right half">
+      <div class="row">
+        <div class="left">
+          <label>Surname</label>
+          <input type="text" [(ngModel)]="customer.Surname" required />
+        </div>
+        <div class="salutation right">
+          <label>Suffix</label>
+          <input type="text" [(ngModel)]="customer.SuffixName" />
+        </div>
+      </div>
+      <div class="row">
+        <label>Customer Sub-type</label><br/>
+        <select class="dropdown" [(ngModel)]="customer.CustomerSubType" required>
+        <option *ngFor="let st of customerSubType" [value]="st.CODE">{{st.DESCRIPTION}}</option>
+      </select>
+        <!--<input type="text" tabindex="4" [disabled]="!IsEditable" [(ngModel)]="customer.CustomerSubType" />-->
+      </div>
+    </div>
+    <div style="clear:both;"></div>
+    <input type="submit" [disabled]="!customerForm.form.valid" value="Save" />
+  </div>
+</form>

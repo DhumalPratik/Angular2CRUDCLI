@@ -1,0 +1,29 @@
+<div *ngIf="config">
+  <div *ngIf="List.length>0">
+    <div *ngIf="filteredList.length<1">
+      <h3>No match found</h3>
+    </div>
+    <label>Quick Search: </label><br/>
+    <input type="text" [(ngModel)]="searchText" (keyup)="search()" placeholder="Search" /> &nbsp;&nbsp;
+    <table class="fixed_headers">
+      <tr style="font-weight:bold; cursor:pointer">
+        <td (click)="sort(col.ColumnName)" [class]="col.HeaderClassName || col.ClassName" *ngFor="let col of colList">{{col.DisplayName || col.ColumnName}}</td>
+      </tr>
+    </table>
+    <div class="scroll">
+      <table class="fixed_headers">
+        <tr *ngFor="let i of filteredList">
+          <td [class]="col.ClassName" *ngFor="let col of colList">
+            <span *ngIf="!col.IsClickable && !col.HasButton">{{i[col.ColumnName]}}</span>
+            <a href="javascript:void(0)" (click)="rClick(i,col.Callback)" *ngIf="col.IsClickable && !col.HasButton">{{i[col.ColumnName]}}</a>
+            <a href="javascript:void(0)" (click)="rClick(i,col.Callback)" *ngIf="col.HasButton && i.HasButton">{{col.DisplayName}}</a>
+          </td>
+          <!--<td [class]="col.ClassName" *ngIf="col.IsClickable" *ngFor="let col of colList">{{i[col.ColumnName]}}</td>-->
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="List.length<1">
+    <h2>Loading...</h2>
+  </div>
+</div>

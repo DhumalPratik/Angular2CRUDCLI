@@ -1,0 +1,110 @@
+input[type=text] {
+    width: 96%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.left{
+    float: left;
+    
+}
+
+.salutation {
+    width:75px;
+}
+.half {
+    width: 42%;
+    padding: 2%;
+    margin : 1%
+}
+
+.w40 {
+    width:40%;
+}
+
+.right{
+    float: right;
+}
+
+.row {
+    padding: 1%;
+    clear:both;
+}
+
+.dropdown{
+    width:70%;
+    height: 40px;
+    padding: 2px;
+    margin: 10px 0px 10px;
+}
+
+.fullWidth{
+    width:100%;
+}
+
+.w20p{
+    width:20px;
+}
+
+.w25{
+    width:25%;
+}
+
+.w50p{
+    width:50px;
+}
+
+.w80p{
+    width:80px;
+}
+
+.w110p{
+    width:110px;
+}
+.right{
+    float:right;
+}
+.left{
+    float: left;
+}
+.w200p{
+    width:200px;
+}
+
+.fixed_headers {
+  
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.detail {
+    margin: 1%;
+}
+.btmMargin {
+    margin-bottom: 1%;
+}
+.w70{
+    width: 70%;
+}
+table {
+    width:100%;
+}
+
+.scroll {
+    max-height: 250px;
+    width:100%;
+    overflow: auto;
+    display: block;
+    margin-bottom: 3%;
+}
+td {
+    padding: 5px;
+    text-align: left;
+  }
+  .lastCol{
+      margin-right:17px;
+  }
+
+  tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }

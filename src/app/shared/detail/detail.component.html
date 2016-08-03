@@ -1,0 +1,20 @@
+<div *ngIf="dConfig">
+  <div *ngIf="dConfig.DataSource.length>0">
+    <label>Detail: </label><br/>
+    {{test}}
+    <div>
+      <table *ngFor="let i of dConfig.DataSource">
+        <tr [class]="col.ClassName" *ngFor="let col of colList">
+          <td>{{col.DisplayName || col.ColumnName}}</td>
+          <td><span *ngIf="!col.IsClickable && !col.HasButton">{{i[col.ColumnName]}}</span>
+            <a href="javascript:void(0)" (click)="dClick(i,col.Callback)" *ngIf="col.IsClickable && !col.HasButton">{{i[col.ColumnName]}}</a>
+            <a href="javascript:void(0)" (click)="dClick(i,col.Callback)" *ngIf="col.HasButton">{{col.DisplayName}}</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="dConfig.DataSource.length<1">
+    <h2>Loading...</h2>
+  </div>
+</div>

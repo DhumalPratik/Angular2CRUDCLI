@@ -1,0 +1,50 @@
+<h1>Customers</h1>
+<div>
+  <div class="detail w25 right" *ngIf="hasDetail">
+    <app-detail (detailClick)="CallbackFunction($event);" [(dConfig)]="detailConfig"></app-detail>
+  </div>
+  <div [class]="detailConfig ? 'w70 left' : ''">
+    <div *ngIf="UnfilteredCustomers.length>0">
+      <div *ngIf="Customers.length<1">
+        <h3>No match found</h3>
+      </div>
+      <label>Search: </label><br/>
+      <input type="text" [(ngModel)]="searchText" placeholder="Search" /> &nbsp;&nbsp;
+      <input type="button" (click)="serverSearch()" value="Search" />
+      <button-test actionType="primary" type="button" value="Search" (onClick)="serverSearch()"></button-test>
+
+      <table class="fixed_headers">
+
+        <tr style="font-weight:bold; cursor:pointer">
+          <td (click)="sort('CustomerId')" class="w110p">Customer ID</td>
+          <td (click)="sort('VcDisplayName')" class="">Display Name</td>
+          <td (click)="sort('CustomerType')" class="w110p">Customer Type</td>
+          <td (click)="sort('CustomerSubType')" class="w200p">Sub-type</td>
+          <td (click)="sort('Status')" class="w110p lastCol">Status</td>
+        </tr>
+
+      </table>
+      <div class="scroll">
+        <table class="fixed_headers">
+
+          <tr *ngFor="let customer of Customers">
+            <td class="w110p">
+              <button-test actionType="link" type="button" [value]="customer.CustomerId" (onClick)="getCustomer(customer)"></button-test>
+              <!--<a href="javascript:void(0)" (click)="getCustomer(customer)">{{customer.CustomerId}}</a>-->
+            </td>
+            <td class="">{{customer.VcDisplayName}}</td>
+            <td class="w110p">{{customer.CustomerType}}</td>
+            <td class="w200p">{{customer.CustomerSubType}}</td>
+            <td class="w110p">{{customer.Status}}</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+    <!--<p>{{config}}</p>-->
+    <!--<app-grid *ngIf="config" (rowClick)="CallbackFunction($event);" [config]="config"></app-grid>-->
+    <div *ngIf="UnfilteredCustomers.length<1">
+      <h2>Loading...</h2>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,168 @@
+<p>
+  Customer details!
+
+</p>
+<div *ngIf="!customer">
+  <p>Fetching details...</p>
+</div>
+<div *ngIf="customer">
+  <form (ngSubmit)="save(customer)" #customerForm="ngForm">
+    <div class="left half">
+      <div class="row">
+        <label>Display Name</label>
+        <input type="text" tabindex="1" disabled="disabled" [(ngModel)]="customer.VcDisplayName" />
+      </div>
+      <div class="row">
+        <div>
+          <div class="salutation left">
+            <label>Salutation</label>
+            <input type="text" [disabled]="!IsEditable" [(ngModel)]="customer.SalutationName" />
+          </div>
+          <div class="left w40">
+            <label>First Name</label>
+            <input type="text" ngModel [disabled]="!IsEditable" [(ngModel)]="customer.FirstName" required/>
+          </div>
+          <div class="right w40">
+            <label>Middle Name</label>
+            <input type="text" [disabled]="!IsEditable" [(ngModel)]="customer.MiddleName" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label>Customer Type</label>
+        <input type="text" tabindex="2" disabled="disabled" [(ngModel)]="customer.CustomerType" />
+      </div>
+      <!--<div class="row">
+      <label>External Id1</label>
+      <input type="text" disabled="disabled" [(ngModel)]="customer.ExternalId1" />
+    </div>
+    <div class="row">
+      <label>External Id2</label>
+      <input type="text" disabled="disabled" [(ngModel)]="customer.ExternalId2" />
+    </div>
+    <div class="row">
+      <label>External Id3</label>
+      <input type="text" disabled="disabled" [(ngModel)]="customer.ExternalId3" />
+    </div>
+    <div class="row">
+      <label>External Id5</label>
+      <input type="text" disabled="disabled" [(ngModel)]="customer.ExternalId5" />
+    </div>-->
+    </div>
+    <div class="right half">
+      <div class="row">
+        <label>Status Change Date</label>
+        <input type="text" disabled="disabled" [(ngModel)]="customer.StatusChangeDate" />
+      </div>
+      <div class="row">
+        <div class="left">
+          <label>Surname</label>
+          <input type="text" [disabled]="!IsEditable" [(ngModel)]="customer.Surname" required/>
+        </div>
+        <div class="salutation right">
+          <label>Suffix</label>
+          <input type="text" [disabled]="!IsEditable" [(ngModel)]="customer.SuffixName" />
+        </div>
+      </div>
+      <!--<div class="row">
+      <label>Customer Type</label>
+      <input type="text" tabindex="2" disabled="disabled" [(ngModel)]="customer.CustomerType" />
+    </div>-->
+      <div class="row">
+        <label>Customer Sub-type</label><br/>
+        <select class="dropdown" [disabled]="!IsEditable" [(ngModel)]="customer.CustomerSubType" required>
+        <option *ngFor="let st of customerSubType" [value]="st.CODE">{{st.DESCRIPTION}}</option>
+      </select>
+        <!--<input type="text" tabindex="4" [disabled]="!IsEditable" [(ngModel)]="customer.CustomerSubType" />-->
+      </div>
+      <!--<div class="row">
+      <label>External Id4</label>
+      <input type="text" disabled="disabled" [(ngModel)]="customer.ExternalId4" />
+    </div>-->
+      <div class="row">
+        <label>Status</label><br/>
+        <select class="dropdown" disabled="disabled" [(ngModel)]="customer.Status" required>
+        <option *ngFor="let st of statusList" [value]="st">{{st}}</option>
+      </select>
+        <!--<input type="text" [disabled]="!IsEditable" [(ngModel)]="customer.Status" />-->
+      </div>
+    </div>
+    <div style="clear:both;"></div>
+    <div>
+      <h3>Notes</h3>
+      <div>
+        <div>
+          <div *ngIf="customer.Notes && customer.Notes.length<1">
+            <h3>No notes available</h3>
+          </div>
+          <div *ngIf="customer.Notes && customer.Notes.length>0">
+
+            <table class="fixed_headers">
+
+              <tr style="font-weight:bold; cursor:pointer">
+                <!--<td (click)="sort('CustomerId')" class="w110p">Customer ID</td>-->
+                <td (click)="sort('StatusChangeDate')" class="w110p">Status Date</td>
+                <td (click)="sort('NoteType')" class="w200p">Note Type</td>
+                <td (click)="sort('NoteText')" class="">Note Text</td>
+              </tr>
+
+            </table>
+            <div class="scroll">
+              <table class="fixed_headers">
+                <tr *ngFor="let note of customer.Notes">
+                  <!--<td class="w110p"><a href="javascript:void(0)">{{note.CustomerId}}</a></td>-->
+                  <td class="w110p">
+                    <span *ngIf="note.StatusChangeDate">{{note.StatusChangeDate | date:'MMM d, y'}}</span>
+                    <a href="javascript:void(0);" (click)="deleteNote(index)" *ngIf="!note.StatusChangeDate">Delete</a>
+                  </td>
+                  <td class="w200p">
+                    <span *ngIf="!IsEditable">{{note.NoteDescription}}</span>
+                    <select class="fullWidth" *ngIf="IsEditable && note.StatusChangeDate" (change)="setModified(note)" [(ngModel)]="note.NoteType"
+                      required>
+                    <option *ngFor="let type of NoteTypeList" [value]="type.CODE">{{type.DESCRIPTION}}</option>
+                    </select>
+                    <select class="fullWidth" *ngIf="IsEditable && !note.StatusChangeDate" (change)="setModified(note)" [(ngModel)]="note.NoteType"
+                      required>
+                    <option *ngFor="let type of noteTypeListForCreate()" [value]="type.CODE">{{type.DESCRIPTION}}</option>
+                    </select>
+                  </td>
+                  <td class="">
+                    <span *ngIf="!IsEditable">{{note.NoteText}}
+                    </span>
+                    <input *ngIf="IsEditable" type="text" (keyup)="setModified(note)" [(ngModel)]="note.NoteText" required/>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="clear:both;"></div>
+    <!--<div *ngIf="hasNewNote && IsEditable">
+      <div>
+        <table class="fixed_headers">
+          <tr>
+            <td class="w110p">New Note: </td>
+            <td class="w200p">
+              <select class="fullWidth" *ngIf="IsEditable" (change)="setModified(newNote)" [(ngModel)]="newNote.NoteType" required>
+                    <option *ngFor="let type of noteTypeListForCreate()" [value]="type.CODE">{{type.DESCRIPTION}}</option>
+                    </select>
+            </td>
+            <td class="">
+              <input *ngIf="IsEditable" type="text" (keyup)="setModified(newNote)" [(ngModel)]="newNote.NoteText" required/>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>-->
+    <input type="button" class="btmMargin" *ngIf="IsEditable && !hasNewNote" value="Add note" (click)="addNewNote()" />
+    <!--<div class="btmMargin">
+      <input type="button" *ngIf="IsEditable && hasNewNote" (click)="cancelNote()" value="Cancel note" />
+      <input *ngIf="IsEditable && hasNewNote" (click)="addNewNote()" type="button" value="Save note" />
+    </div>-->
+    <br/>
+    <input type="button" (click)="toggleEdit()" [value]="!IsEditable?'Edit':'Cancel'" />
+    <input *ngIf="IsEditable" [disabled]="!customerForm.form.valid" type="submit" value="Save" />
+  </form>
+</div>
