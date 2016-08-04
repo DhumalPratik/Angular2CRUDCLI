@@ -4,21 +4,20 @@ import 'rxjs/add/operator/toPromise';
 import { Customer } from './customer';
 import { CustomerNote } from './customer-note';
 import { NOTE_TYPE } from './notetype-model';
-
+import {SERVER_CONFIG} from './server-config';
 // import { DUMMY_CUSTOMER_RESPONSE } from './customer-model';
 import { DUMMY_CUSTOMER_SUBTYPE } from './customer-subtype-model';
 
 @Injectable()
 export class CustomerService {
 
-  private server = 'http://10.116.24.110:80/Nexxus.API.Service/v1/';
-  private url = this.server + 'pres_customer';
-  private notesUrl = this.server + 'pres_notes';
+  private url = SERVER_CONFIG.server + 'pres_customer';
+  private notesUrl = SERVER_CONFIG.server + 'pres_notes';
   headers: Headers;
 
   constructor(private http: Http) {
     this.headers = new Headers();
-    this.headers.append("Authorization", "Basic " + btoa("lbarber:cegedim1"));
+    this.headers.append("Authorization", "Basic " + btoa(SERVER_CONFIG.username + ":" + SERVER_CONFIG.password));
     this.headers.append("Accept", "application/json; odata.metadata=minimal; charset=utf-8;");
     // this.headers.append("Content-Type", "application/json;");
   }
